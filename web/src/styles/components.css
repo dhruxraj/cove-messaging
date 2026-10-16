@@ -1,0 +1,476 @@
+/* ==========================================================================
+   Additions to the Cove design system (same tokens as app.css).
+   ========================================================================== */
+
+/* ---------- auth & setup ---------- */
+.auth__mobile-brand {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: var(--fs-lg);
+}
+@media (max-width: 860px) {
+  .auth__mobile-brand {
+    display: flex;
+  }
+}
+.auth__lock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px !important;
+  font-size: var(--fs-sm) !important;
+  color: rgba(244, 246, 252, 0.7) !important;
+}
+.auth__lock svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+.setup-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: var(--tide-soft);
+  color: var(--tide);
+}
+:root[data-theme='dark'] .setup-icon {
+  color: #b6c0ee;
+}
+.setup-icon svg {
+  width: 26px;
+  height: 26px;
+}
+.setup-points {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  color: var(--ink-2);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+}
+.setup-points li {
+  position: relative;
+  padding-left: 22px;
+}
+.setup-points li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--lantern);
+}
+.recovery {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px dashed var(--line);
+}
+.recovery__key {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: center;
+  gap: 4px 2px;
+  font: 600 19px/1.5 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  letter-spacing: 0.06em;
+  text-align: center;
+  word-break: break-word;
+  color: var(--ink);
+  user-select: all;
+}
+.recovery__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+.recovery__confirm,
+.recovery__input {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.recovery__confirm {
+  max-width: 140px;
+  text-align: center;
+}
+.cropper__error {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+  color: #c9d1dc;
+  font-size: var(--fs-sm);
+}
+
+/* ---------- rail: notifications ---------- */
+.notif-panel {
+  width: 340px;
+  padding: 6px;
+  max-height: min(480px, 70vh);
+  overflow-y: auto;
+}
+.notif-panel__head {
+  padding: 8px 10px;
+  font-weight: 700;
+}
+.notif-panel__empty {
+  margin: 0;
+  padding: 10px 10px 14px;
+  color: var(--ink-3);
+  font-size: var(--fs-sm);
+}
+.notif {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  padding: 10px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  text-align: left;
+  color: inherit;
+}
+.notif:hover {
+  background: var(--surface-2);
+}
+.notif--unread {
+  background: var(--lantern-soft);
+}
+.notif__title {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-weight: 650;
+  font-size: var(--fs-sm);
+}
+.notif__title span {
+  font-weight: 400;
+  color: var(--ink-3);
+  font-size: var(--fs-xs);
+}
+.notif__body {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  line-height: 1.4;
+}
+
+/* ---------- form bits ---------- */
+.radio-list {
+  display: grid;
+  gap: 2px;
+}
+.radio,
+.checkline {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 4px;
+  border-radius: 8px;
+  cursor: pointer;
+  line-height: 1.4;
+}
+.checkline {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+.radio input,
+.checkline input {
+  margin-top: 3px;
+  accent-color: var(--tide);
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+.dialog__actions--stack {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* ---------- bubbles ---------- */
+.bubble__media {
+  position: relative;
+}
+.bubble__meta-row {
+  overflow: hidden;
+  padding: 0 4px 2px;
+}
+.bubble--jumbo {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding-left: 0;
+  padding-right: 0;
+}
+.bubble--jumbo .meta {
+  color: var(--ink-3) !important;
+}
+.msg--pending .bubble {
+  opacity: 0.92;
+}
+.media-gone {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  font-size: var(--fs-sm);
+  font-style: italic;
+  color: var(--ink-3);
+}
+.msg--out .media-gone {
+  color: var(--bubble-out-meta);
+}
+.media-gone svg {
+  width: 16px;
+  height: 16px;
+}
+.e2ee-note {
+  align-self: center;
+  max-width: 420px;
+  margin: 10px auto 6px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: var(--lantern-soft);
+  color: var(--ink-2);
+  font-size: var(--fs-xs);
+  line-height: 1.45;
+  text-align: center;
+}
+.e2ee-note svg {
+  width: 13px;
+  height: 13px;
+  vertical-align: -2px;
+  margin-right: 4px;
+}
+.system-msg--action {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--fs-xs);
+}
+.system-msg--action:hover {
+  filter: brightness(0.97);
+}
+.lantern__core strong {
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+}
+.msg-menu {
+  min-width: 248px;
+}
+
+/* ---------- audio ---------- */
+.audio__title {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 220px;
+}
+.audio__time {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.audio__rate {
+  border: 0;
+  border-radius: 8px;
+  padding: 1px 6px;
+  background: rgba(127, 127, 127, 0.16);
+  color: inherit;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+}
+
+/* ---------- viewers ---------- */
+.viewer__loading {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  color: #c9d1dc;
+  font-size: var(--fs-sm);
+}
+.viewer__error {
+  max-width: 360px;
+  text-align: center;
+  color: #c9d1dc;
+  line-height: 1.5;
+}
+.viewer__shield p {
+  margin: 10px 0 0;
+}
+.viewer--protected canvas {
+  pointer-events: none;
+}
+
+/* ---------- composer ---------- */
+.recorder__once {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1.5px dashed var(--ink-3);
+  background: transparent;
+  color: var(--ink-2);
+  font-weight: 800;
+  font-size: 13px;
+}
+.recorder__once--on {
+  border-style: solid;
+  border-color: var(--lantern);
+  background: var(--lantern);
+  color: var(--lantern-ink);
+}
+.recorder__once:disabled {
+  opacity: 0.4;
+}
+.chat {
+  position: relative;
+}
+.chat--drop::after {
+  content: 'Drop to send';
+  position: absolute;
+  inset: 8px;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  border: 2px dashed var(--tide);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--shore) 86%, transparent);
+  color: var(--tide);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  pointer-events: none;
+}
+.chat__banner--button {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--fs-sm);
+}
+.chat__banner--button:hover {
+  color: var(--ink);
+}
+.chat__banner--warn {
+  background: var(--flare-soft);
+  color: var(--ink);
+}
+.chat__banner--warn > svg {
+  color: var(--flare);
+}
+
+/* ---------- settings & panels ---------- */
+.settings__title {
+  flex: 1;
+  margin: 0;
+  font-size: var(--fs-lg);
+}
+.settings__note {
+  margin: 4px 20px 0;
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+  line-height: 1.45;
+}
+.settings__explain {
+  margin: 18px 20px 8px;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+.settings__explain h3 {
+  margin: 14px 0 4px;
+  font-size: var(--fs-sm);
+  color: var(--ink);
+}
+.settings__explain p {
+  margin: 0 0 8px;
+}
+.setting__chevron {
+  width: 18px;
+  height: 18px;
+  color: var(--ink-3);
+  flex: none;
+}
+.setting__value--ok {
+  color: var(--online);
+  font-weight: 600;
+}
+.profile-hero--button {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.panel__foot {
+  margin: 8px 20px;
+  text-align: center;
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+}
+.safety-number {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px 8px;
+  padding: 18px;
+  border-radius: 14px;
+  background: var(--surface);
+  font: 600 18px/1.2 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+@media (max-width: 400px) {
+  .safety-number {
+    grid-template-columns: repeat(3, 1fr);
+    font-size: 16px;
+  }
+}
+
+.recovery__dash {
+  opacity: 0.35;
+  padding: 0 2px;
+}
+
+/* ---------- fixes from visual review ---------- */
+.viewer--protected .viewer__stage {
+  overflow: hidden;
+}
+.composer textarea:focus-visible {
+  box-shadow: none;
+}
+.rail__head .dot-badge {
+  top: 4px;
+  right: 3px;
+  min-width: 12px;
+  height: 14px;
+  line-height: 14px;
+  font-size: 9px;
+  padding: 0 3px;
+}
+.file-chip__name,
+.file-chip__meta {
+  display: block;
+}
+
+/* Follow the visual viewport (on-screen keyboard) — see main.tsx. */
+.shell {
+  height: var(--app-height, 100dvh);
+}
+
+.timeline__sentinel {
+  height: 1px;
+  flex: none;
+}

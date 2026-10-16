@@ -1,0 +1,20 @@
+# Caddy terminates TLS (certificates from Let's Encrypt, renewed automatically) and proxies
+# HTTP and WebSocket traffic to Cove. Cove sets its own security headers (CSP, HSTS, …).
+{$DOMAIN} {
+	encode zstd gzip
+
+	# Uploads stream straight through; Cove enforces its own size limits.
+	request_body {
+		max_size 2GB
+	}
+
+	reverse_proxy app:8080 {
+		# Cove trusts exactly one proxy hop for the client address (TRUST_PROXY=true).
+		header_up X-Forwarded-For {remote_host}
+	}
+
+	log {
+		output stdout
+		format json
+	}
+}

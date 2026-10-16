@@ -1,0 +1,32 @@
+{
+  "name": "cove",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cove \u2014 a private, end-to-end encrypted, real-time messaging web app.",
+  "license": "UNLICENSED",
+  "workspaces": [
+    "server",
+    "web"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:mailbox": "node scripts/dev-mailbox.mjs",
+    "build": "npm run build -w web && npm run build -w server",
+    "start": "npm run start -w server",
+    "migrate": "npm run migrate -w server",
+    "typecheck": "npm run typecheck -w server && npm run typecheck -w web && tsc --noEmit -p e2e/tsconfig.json",
+    "test": "npm run test -w server",
+    "test:e2e": "npm run build -w web && node --import tsx --test --test-concurrency=1 --test-timeout=240000 e2e/*.test.ts",
+    "test:all": "npm test && npm run test:e2e",
+    "secrets:generate": "node server/scripts/generate-secrets.mjs",
+    "vapid:generate": "node server/scripts/generate-vapid.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.56.0",
+    "tsx": "4.23.12",
+    "typescript": "6.0.3"
+  }
+}

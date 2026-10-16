@@ -1,0 +1,88 @@
+# Production stack: Caddy (automatic HTTPS) → Cove → PostgreSQL, plus nightly backups.
+#
+#   cp .env.example .env    # set DOMAIN, APP_ORIGIN=https://$DOMAIN, secrets, SMTP, POSTGRES_PASSWORD
+#   docker compose up -d --build
+#
+# Point your domain's DNS A/AAAA record at this host first; Caddy obtains the certificate itself.
+name: cove
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: cove
+      POSTGRES_USER: cove
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U cove -d cove']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks: [internal]
+
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://cove:${POSTGRES_PASSWORD}@db:5432/cove
+      DATABASE_SSL: disable # traffic stays on the private compose network
+      TRUST_PROXY: 'true'
+      STORAGE_DIR: /data/storage
+    volumes:
+      - app-data:/data
+    depends_on:
+      db:
+        condition: service_healthy
+    networks: [internal, web]
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN:?set DOMAIN in .env}
+    ports:
+      - '80:80'
+      - '443:443'
+      - '443:443/udp'
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on: [app]
+    networks: [web]
+
+  # Nightly database dump + media archive into ./backups (keeps 14 days). Copy them off the host.
+  backup:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      PGHOST: db
+      PGUSER: cove
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+      PGDATABASE: cove
+      KEEP_DAYS: '14'
+    volumes:
+      - ./backups:/backups
+      - app-data:/data:ro
+      - ./deploy/backup.sh:/backup.sh:ro
+    entrypoint: ['/bin/sh', '-c', 'while true; do /bin/sh /backup.sh; sleep 86400; done']
+    depends_on:
+      db:
+        condition: service_healthy
+    networks: [internal]
+
+volumes:
+  db-data:
+  app-data:
+  caddy-data:
+  caddy-config:
+
+networks:
+  internal:
+    internal: true
+  web:

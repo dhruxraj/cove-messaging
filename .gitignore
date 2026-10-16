@@ -1,0 +1,10 @@
+node_modules/
+dist/
+data/
+backups/
+.env
+.env.*
+!.env.example
+e2e/screenshots/
+*.log
+.DS_Store

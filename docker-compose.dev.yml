@@ -1,0 +1,18 @@
+# Local development database only. Run the app itself with `npm run dev`.
+#   docker compose -f docker-compose.dev.yml up -d
+name: cove-dev
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: devpassword
+      POSTGRES_DB: cove_dev
+    ports:
+      - '127.0.0.1:5432:5432'
+    volumes:
+      - dev-db:/var/lib/postgresql/data
+      - ./deploy/dev-init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+volumes:
+  dev-db:

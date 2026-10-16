@@ -1,0 +1,15 @@
+{
+  "name": "Cove",
+  "short_name": "Cove",
+  "description": "Private messaging",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F7F8FA",
+  "theme_color": "#33407A",
+  "icons": [
+    { "src": "/icon.svg", "type": "image/svg+xml", "sizes": "any" },
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" }
+  ]
+}
